@@ -4,8 +4,10 @@ from rest_framework.views import APIView
 from rest_framework.generics import get_object_or_404
 from .models import User, Task
 from .serializers import UserSerializer, TaskSerializer
-
 class CreateTaskAPIView(APIView):
+    """
+    API to create a new task.
+    """
     def post(self, request):
         serializer = TaskSerializer(data=request.data)
         if serializer.is_valid():
@@ -14,6 +16,9 @@ class CreateTaskAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class AssignTaskAPIView(APIView):
+    """
+    API to assign a task to users.
+    """
     def post(self, request, task_id):
         task = get_object_or_404(Task, id=task_id)
         user_ids = request.data.get('assigned_users', [])
@@ -26,6 +31,9 @@ class AssignTaskAPIView(APIView):
         return Response({"message": "Task assigned successfully"}, status=status.HTTP_200_OK)
 
 class GetTasksForUserAPIView(APIView):
+    """
+    API to get all tasks assigned to a specific user.
+    """
     def get(self, request, user_id):
         user = get_object_or_404(User, id=user_id)
         tasks = user.tasks.all()
@@ -33,9 +41,15 @@ class GetTasksForUserAPIView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class UserViewSet(viewsets.ModelViewSet):
+    """
+    API to manage user CRUD operations.
+    """
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 class TaskViewSet(viewsets.ModelViewSet):
+    """
+    API to manage task CRUD operations.
+    """
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
