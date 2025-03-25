@@ -6,6 +6,17 @@ class User(AbstractUser):
     department = models.CharField(max_length=50, choices=[
         ('backend', 'Backend'), ('frontend', 'Frontend'), ('testing', 'Testing')
     ])
+    groups = models.ManyToManyField(
+        "auth.Group",
+        related_name="custom_user_set",  # Prevent conflict
+        blank=True
+    )
+
+    user_permissions = models.ManyToManyField(
+        "auth.Permission",
+        related_name="custom_user_permissions_set",  # Prevent conflict
+        blank=True
+    )
 
 class Task(models.Model):
     name = models.CharField(max_length=255)
