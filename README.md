@@ -128,6 +128,6 @@ $ python manage.py runserver
 This project is licensed under the MIT License.
 
 ## Author
-- **Your Name** - [GitHub](https://github.com/yourusername)
+- **Govind Hanswal** - [GitHub](https://github.com/GovindHanswal)
 
 
